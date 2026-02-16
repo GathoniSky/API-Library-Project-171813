@@ -1,89 +1,167 @@
-header{
-    background-color: white ; /*named color values*/
-    color: #FFFFFF ;/*hex color values*/
-    color: rgb(255, 255, 255);/*rgb color values*/
-
-    padding-top: 10px;
-    padding-bottom: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-
-
-display: flex;
-justify-content: space-between;
-align-items: center;
-
-/*floating and positioning */
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-z-index: 1;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-.LOGO img {
-    max-width: 100px;
-}
-
-#LOGO{
-    max-width: 50px;
-}
-
 
 body {
-font-family: Arial, sans-serif;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-min-height: 100vh;
-margin: 0;
-background-color: #97cbe3;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('background.jpg' ) no-repeat center center fixed;
+    background-size: cover;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
 }
 
 .container {
-
-background: white;
-padding: 20px 30px;
-border-radius: 5px;
-box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-text-align: center;
-width: 300px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    z-index: 1;
+    border-top: 5px solid #FFD700;
 }
 
-input {
-display: block;
-width: 100%;
-padding: 10px;
-margin: 10px 0;
-border-radius: 3px;
-border: 1px solid #ccc;
+h2 {
+    font-size: 32px;
+    color: #5c1919;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-button {
-padding: 10px 20px;
-background-color: #0077cc;
-color: white;
-border: none;
-border-radius: 3px;
-cursor: pointer;
+.container > p {
+    color: #5c1919;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #FFD700;
+    padding-bottom: 15px;
 }
 
-button:hover {
-background-color: #005fa3;
+.dashboard-layout {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
-#message {
-margin-top: 15px;
-color: green;
+.left-column {
+    flex: 1;
+}
+
+.right-column {
+    flex: 1;
+}
+
+#bookForm {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #FFD700;
+    height: 100%;
+}
+
+#bookForm h3 {
+    color: #5c1919;
+    margin-bottom: 20px;
+    font-size: 20px;
+    border-left: 5px solid #FFD700;
+    padding-left: 15px;
+}
+
+#bookForm input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+#bookForm input:focus {
+    outline: none;
+    border-color: #FFD700;
+}
+
+#bookForm button {
+    width: 100%;
+    padding: 14px;
+    background: #5c1919;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#bookForm button:hover {
+    background: #7a2121;
+}
+
+#bookList {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #FFD700;
+    height: 100%;
+}
+
+#bookList h3 {
+    color: #5c1919;
+    margin-bottom: 20px;
+    font-size: 20px;
+    border-left: 5px solid #FFD700;
+    padding-left: 15px;
+}
+
+#bookList ul {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#bookList li {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #FFD700;
+    margin-bottom: 10px;
+    color: #5c1919;
+}
+
+#bookList li:last-child {
+    margin-bottom: 0;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 nav a {
-margin: 0 10px;
-text-decoration: none;
-color: #0077cc;
-font-weight: bold;
+    padding: 10px 25px;
+    background: white;
+    color: #5c1919;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 2px solid #FFD700;
 }
 
 nav a:hover {
-color: #005fa3;
+    background: #5c1919;
+    color: white;
+    border-color: #5c1919;
 }
