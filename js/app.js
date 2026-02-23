@@ -1,3 +1,7 @@
+console.log('DOM fully loaded');
+console.log('bookForm:', bookForm);
+console.log('bookListUl:', bookListUl);
+
 // ----------------------------
 // LOGIN FORM HANDLER
 // ----------------------------
@@ -29,56 +33,77 @@ window.location.href = 'landing.html';
 }, 1000);
 });
 }
+// Wait until the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
 
-// ----------------------------
-// ADMIN BOOK MANAGEMENT
-// ----------------------------
 const bookForm = document.getElementById('bookForm');
 const bookListUl = document.querySelector('#bookList ul');
 
-const books = []; // Array to store books
+// Fetch all books from Laravel API
+async function fetchBooks() {
+try {
+const response = await fetch('http://127.0.0.1:8000/api/books');
+const books = await response.json();
 
+bookListUl.innerHTML = '';
+
+books.forEach(book => {
+const li = document.createElement('li');
+li.innerText = `${book.title} by ${book.author} (${book.year})`;
+
+const deleteBtn = document.createElement('button');
+deleteBtn.innerText = 'Delete';
+deleteBtn.style.marginLeft = '10px';
+deleteBtn.addEventListener('click', () => deleteBook(book.id));
+
+li.appendChild(deleteBtn);
+bookListUl.appendChild(li);
+});
+} catch (error) {
+console.error('Error fetching books:', error);
+}
+}
+
+// Add new book
 if (bookForm) {
-bookForm.addEventListener('submit', function(e) {
+
+bookForm.addEventListener('submit', async (e) => {
 e.preventDefault();
 
-// Create book object
 const book = {
 title: document.getElementById('title').value,
 author: document.getElementById('author').value,
 year: document.getElementById('year').value
 };
 
-// Add to books array
-books.push(book);
+try {
+await fetch('http://127.0.0.1:8000/api/books', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(book)
+});
 
-// Update DOM
-renderBookList();
-
-// Reset form
 bookForm.reset();
+fetchBooks();
+} catch (error) {
+console.error('Error adding book:', error);
+}
 });
 }
 
-// Render books in the list
-function renderBookList() {
-bookListUl.innerHTML = '';
+// Delete book
+async function deleteBook(id) {
+try {
 
-books.forEach((book, index) => {
-
-const li = document.createElement('li');
-li.innerText = `${book.title} by ${book.author} (${book.year})`;
-
-// Delete button
-const deleteBtn = document.createElement('button');
-deleteBtn.innerText = 'Delete';
-deleteBtn.style.marginLeft = '10px';
-deleteBtn.addEventListener('click', () => {
-books.splice(index, 1); // Remove from array
-renderBookList(); // Re-render
+await fetch(`http://127.0.0.1:8000/api/books/${id}`, {
+method: 'DELETE'
 });
-
-li.appendChild(deleteBtn);
-bookListUl.appendChild(li);
-});
+fetchBooks();
+} catch (error) {
+console.error('Error deleting book:', error);
 }
+}
+
+// Initial load
+if (bookListUl) fetchBooks();
+});
